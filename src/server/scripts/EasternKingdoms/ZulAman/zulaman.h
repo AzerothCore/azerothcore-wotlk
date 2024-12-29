@@ -41,7 +41,11 @@ enum DataTypes
     DATA_HARRISON_JONES                 = 13,
     TYPE_AKILZON_GAUNTLET               = 14,
     DATA_LOOKOUT                        = 15,
-    DATA_ZULJIN_GATE                    = 16
+    DATA_ZULJIN_GATE                    = 16,
+    DATA_ASHLI                          = 17,
+    DATA_TANZAR                         = 18,
+    DATA_HARKOR                         = 19,
+    DATA_KRAZ                           = 20
 };
 
 enum CreatureIds
@@ -58,6 +62,10 @@ enum CreatureIds
     NPC_AMANISHI_MEDICINE_MAN           = 23581,
     NPC_AMANISHI_AXE_THROWER            = 23542,
     NPC_AMANI_HATCHLING                 = 23598, // 42493
+    NPC_ASHLI                           = 24001,
+    NPC_TANZAR                          = 23790,
+    NPC_HARKOR                          = 23999,
+    NPC_KRAZ                            = 24024,
     // Akil'zon gauntlet
     NPC_AMANISHI_WIND_WALKER            = 24179,
     NPC_AMINISHI_LOOKOUT                = 24175,
@@ -75,10 +83,6 @@ enum GameobjectIds
     GO_MASSIVE_GATE                     = 186728,
     GO_DOOR_AKILZON                     = 186858,
     GO_ZULJIN_FIREWALL                  = 186859,
-    GO_HARKORS_SATCHEL                  = 187021,
-    GO_TANZARS_TRUNK                    = 186648,
-    GO_ASHLIS_BAG                       = 186672,
-    GO_KRAZS_PACKAGE                    = 186667,
     GO_STRANGE_GONG                     = 187359
 };
 
@@ -87,7 +91,8 @@ enum MiscIds
     DATA_TIMED_RUN                      = 0,
     ACTION_START_TIMED_RUN              = 0,
     ACTION_START_AKILZON_GAUNTLET       = 1,
-    GROUP_TIMED_RUN                     = 1
+    GROUP_TIMED_RUN                     = 1,
+    SPELL_COSMETIC_IMMOLATION           = 42726
 };
 
 uint32 constexpr PersistentDataCount = 1;
