@@ -93,6 +93,7 @@
 #include "WorldPacket.h"
 #include "WorldSession.h"
 #include "WorldState.h"
+#include "TC9Sidecar.h"
 #include <boost/asio/ip/address.hpp>
 #include <cmath>
 
@@ -2519,6 +2520,24 @@ void World::Update(uint32 diff)
         sScriptMgr->OnWorldUpdate(diff);
     }
 
+    if (sToCloud9Sidecar->ClusterModeEnabled())
+    {
+        {
+            METRIC_TIMER("world_update_time", METRIC_TAG("type", "Process TC9 async tasks"));
+            sToCloud9Sidecar->ProcessAsyncTasks();
+        }
+
+        {
+            METRIC_TIMER("world_update_time", METRIC_TAG("type", "Process TC9 hooks"));
+            sToCloud9Sidecar->ProcessHooks();
+        }
+
+        {
+            METRIC_TIMER("world_update_time", METRIC_TAG("type", "Process TC9 gRPC and HTTP requests"));
+            sToCloud9Sidecar->ProcessGrpcOrHttpRequests();
+        }
+    }
+
     {
         METRIC_TIMER("world_update_time", METRIC_TAG("type", "Update metrics"));
         // Stats logger update
@@ -3161,6 +3180,9 @@ void World::LoadWorldStates()
 // Setting a worldstate will save it to DB
 void World::setWorldState(uint32 index, uint64 timeValue)
 {
+    if (sToCloud9Sidecar->IsCrossrealm())
+        return;
+    
     auto const& it = _worldstates.find(index);
     if (it != _worldstates.end())
     {

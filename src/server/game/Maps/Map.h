@@ -480,6 +480,10 @@ public:
 
     void SendToPlayers(WorldPacket const* data) const;
 
+    void StartPlayersRedirectKickTimer();
+    void StopPlayersRedirectKickTimer();
+    bool IsPlayerRedirectKickTimerActive() { return !_redirectKickTimer.Passed(); }
+
     typedef MapRefMgr PlayerList;
     [[nodiscard]] PlayerList const& GetPlayers() const { return m_mapRefMgr; }
 
@@ -701,6 +705,8 @@ private:
 
     void SendObjectUpdates();
 
+    void UpdatePlayersRedirectKickEvent(uint32 diff);
+
 protected:
     std::mutex Lock;
     std::mutex GridLock;
@@ -807,6 +813,9 @@ private:
     std::unordered_set<Corpse*> _corpseBones;
 
     std::unordered_set<Object*> _updateObjects;
+
+    TimeTrackerSmall _redirectKickTimer;
+    TimeTrackerSmall _lastAnnounceRedirectKickTimer;
 };
 
 enum InstanceResetMethod
